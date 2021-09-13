@@ -44,7 +44,7 @@ python Udemy_Coupon_Hunter.py
 2. Choose the number of pages to look for from each website.
 3. Choose if you want to export the links to a text file or not. This will be placed in the same directory as the .py / exe or the binary file for linux.
 4. Choose if you want to enroll in all the courses automatically.
-5. Here you will have two choices you can either enter your email and password for your udemy account (Wont work if you use a google account to login. Or you can enter the cookies asked.
+5. Here you will have two choices you can either enter your email and password for your udemy account this Wont work if you use a google account to login. So to deal with that, you can enter the cookies asked.
 6. Make sure to work hard and make your future better :)
 
 # Where to get the three cookies:
