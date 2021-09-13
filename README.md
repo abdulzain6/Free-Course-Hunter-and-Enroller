@@ -30,6 +30,7 @@ https://github.com/abdulzain6/Free-Course-Hunter-and-Enroller/releases/download/
 1. Open the google play store and download termux.[Download Termux](https://play.google.com/store/apps/details?id=com.termux)
 2. Type the following.
 ```
+apt-get update
 apt install git
 apt install python
 git clone https://github.com/abdulzain6/Free-Course-Hunter-and-Enroller/
