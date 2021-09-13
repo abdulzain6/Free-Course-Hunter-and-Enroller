@@ -1,0 +1,4 @@
+requests
+BeautifulSoup4
+youtube-search-python
+cloudscraper
