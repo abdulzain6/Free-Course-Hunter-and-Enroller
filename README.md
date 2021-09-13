@@ -1,7 +1,7 @@
 # Free-Course-Hunter-and-Enroller
 This is a very easy to use tool developed in python that will search for free courses from multiple sites including youtube and enroll in the ones in which it can. it will scrape the targetted websites and will enroll the user in the free paid courses. So everyone can get the oppurtunity to learn and develop their skills. Most of these courses will have certificate of completion too. Good Luck , Happy Learning!
 
-# Screenshots.
+# Screenshots
 
 ![image](https://user-images.githubusercontent.com/77825794/133130999-d926af22-9a79-4c5f-bd09-cd95e2788ee2.png)
 
@@ -48,7 +48,8 @@ python Udemy_Coupon_Hunter.py
 5. Here you will have two choices you can either enter your email and password for your udemy account this Wont work if you use a google account to login. So to deal with that, you can enter the cookies asked.
 6. Make sure to work hard and make your future better :)
 
-# Where to get the three cookies:
+# Where to get the three cookies
+
 
 1. Go to https://www.udemy.com/ (Make sure you are logged in) and right click then choose inspect or something similar.
 
