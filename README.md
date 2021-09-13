@@ -40,7 +40,7 @@ python Udemy_Coupon_Hunter.py
 
 
 # Usage
-1. You are presented with a nice menu with categories to choose from choose what you wish.
+1. You are presented with a nice menu with categories to choose from, choose what you wish.
 2. Choose the number of pages to look for from each website.
 3. Choose if you want to export the links to a text file or not. This will be placed in the same directory as the .py / exe or the binary file for linux.
 4. Choose if you want to enroll in all the courses automatically.
