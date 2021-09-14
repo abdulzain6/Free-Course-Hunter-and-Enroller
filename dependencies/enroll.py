@@ -163,7 +163,7 @@ def try_login(email, password):
             elif txt[0] == "T":
                 print(RED +"Email or password incorrect")
             else:
-                print(YELLOQ +txt)
+                print(YELLOW +txt)
             time.sleep(1)
             exit()
         cookies = make_cookie(r.cookies["client_id"], r.cookies["access_token"], csrf_token)
