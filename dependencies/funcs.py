@@ -103,7 +103,7 @@ Categories :
 def get_pages (pages=None):
     while isinstance(pages , int) == False or  pages == 0:
         try:
-            pages = int(input(f"{BLUE}Enter the number of pages to scrape: "))
+            pages = int(input(f"{BLUE}Enter the number of pages to search for: "))
         except:
             print(RED + "Invalid number of pages.")
 
