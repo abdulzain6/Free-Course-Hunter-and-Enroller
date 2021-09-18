@@ -76,6 +76,8 @@ class real_disc():
                         new_url = url.replace("REPLACEME" , str(i))
                     elif "https://100offdeal.online/page/REPLACEME" in url:
                         new_url = url.replace("REPLACEME" , str(i))
+                    elif "https://couponseagle.com/page/REPLACEME/" in url:
+                        new_url = url.replace("REPLACEME" , str(i))
                     else:    
                         new_url = url+str(i)
                     futures.append((executor.submit(self.get_free_courses_from_page, new_url , headers)))
