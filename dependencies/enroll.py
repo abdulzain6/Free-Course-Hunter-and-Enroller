@@ -181,7 +181,7 @@ def enroll_with_email_pass(url , currency ,logged_session):
         free_checkout(coupon , id ,logged_session ,currency)
         print(RED +"[Enrolled] " , url)
     except:
-        print(RED +"Failed to enroll")
+        print(GREEN +"Failed to enroll")
 
 def enroll_with_cookie(url , cookies):
     head, user, currency, s = authorize(cookies)
@@ -192,7 +192,7 @@ def enroll_with_cookie(url , cookies):
         free_checkout(coupon , id ,s ,currency)
         print(f"{GREEN}[Enrolled] " , url)
     except:
-        print(f"{GREEN}Failed to enroll")
+        print(f"{RED}Failed to enroll")
 
 
     
