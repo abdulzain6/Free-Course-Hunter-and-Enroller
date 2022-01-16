@@ -1,5 +1,7 @@
 import cloudscraper ,time , random
-from .Real_Discount import *
+#from .Real_Discount import *
+import requests
+from bs4 import BeautifulSoup
 RED  = "\u001b[31m"
 CYAN = "\u001b[36m"
 GREEN = "\u001b[32m"
@@ -73,12 +75,11 @@ def get_cookies():
     return client_id, access_token, csrf_token
 
 def make_cookie(client_id , access_token , csrf_token):
-    cookie = {
+    return {
         "client_id" : client_id,
         "access_token" : access_token,
         "csrf_token" : csrf_token
     }
-    return cookie
 
 def get_course_coupon(url):
     query = urlsplit(url).query
@@ -110,10 +111,15 @@ def authorize(cookies):
         s.cookies.update(cookies)
         s.headers.update(head)
         s.keep_alive = False
-        
+        print(
+        s.get(
+            "https://www.udemy.com/api-2.0/contexts/me/?me=True&Config=True"
+        ).text
+        )
         r = s.get(
             "https://www.udemy.com/api-2.0/contexts/me/?me=True&Config=True"
         ).json()
+
         currency = r["Config"]["price_country"]["currency"]
         user = ""
         user = r["me"]["display_name"]
@@ -142,7 +148,17 @@ def try_login(email, password):
         s = cloudscraper.create_scraper()
 
         s.cookies.update(r.cookies)
-        s.headers.update({"Referer": "https://www.udemy.com/join/signup-popup/"})
+        s.headers.update({"Referer": "https://www.udemy.com/join/signup-popup/",
+                        "accept": "application/json, text/plain, */*",
+                        "x-requested-with": "XMLHttpRequest",
+                        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36 Edg/89.0.774.77",
+                        "x-forwarded-for": str(
+                            ".".join(map(str, (random.randint(0, 255) for _ in range(4))))
+                        ),
+                        "content-type": "application/json;charset=UTF-8",
+                        "origin": "https://www.udemy.com",
+                        "dnt": "1",
+        })
         try:
             r = s.post(
                 "https://www.udemy.com/join/login-popup/?locale=en_US",
@@ -167,7 +183,7 @@ def try_login(email, password):
             time.sleep(1)
             exit()
         cookies = make_cookie(r.cookies["client_id"], r.cookies["access_token"], csrf_token)
-        head, user, currency, s = authorize(r.cookies)
+        head, user, currency, s = authorize(cookies)
 
         return currency, s
 

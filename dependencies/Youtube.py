@@ -1,16 +1,17 @@
 from youtubesearchpython import *
+from .models import *
 
 
 def SearchYoutube(*queries , limit):
-    urls = []
-    titles = []
+    courses = []
     for query in queries:
         customSearch = CustomSearch(query, searchPreferences = "CAMSAhgC",  limit = limit )
         results = customSearch.result()["result"]
         for result in results:
-            urls.append(result["link"])
-            titles.append(result["title"])
-    return titles, urls
+            c = course(result["title"],result["link"])
+            courses.append(c)
+
+    return courses
 
 def Feed_queries (category , value_13 , limit):
         if category == 1:

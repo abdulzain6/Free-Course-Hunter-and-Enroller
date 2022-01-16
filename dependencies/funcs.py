@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests ,json
 from os import system, name 
 from time import sleep
+from .models import *
+
 RED  = "\u001b[31m"
 CYAN = "\u001b[36m"
 GREEN = "\u001b[32m"
@@ -13,10 +15,7 @@ GREY ="\u001b[30;1m"
 GREEN2 = "\u001b[32;1m"
 def clear(): 
 
-    if name == 'nt': 
-        _ = system('cls') 
-    else: 
-        _ = system('clear') 
+    _ = system('cls') if name == 'nt' else system('clear') 
     
 def Validate_link_and_get_price(url):
     def make_url(url , id):
@@ -31,6 +30,8 @@ def Validate_link_and_get_price(url):
 
     headers = {"User-Agent" : "Mozilla/5.0 (X11; CrOS x86_64 13597.94.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.186 Safari/537.36" , "Accept-Language":"en-US,en;q=0.5"}    
     try :
+
+
         try :
             r = requests.get(url , headers=headers , allow_redirects=True)
             if r.status_code == 302 or r.status_code == 301 or "is no longer available" in r.text or "no longer" in r.text:
@@ -38,12 +39,17 @@ def Validate_link_and_get_price(url):
             soup = BeautifulSoup(r.text , "html.parser")
         except:
             return False ,0
+
+
         try:
             id  = soup.find("body")["data-clp-course-id"]
         except:
             id = 123
+
+
+
         r = requests.get(make_url(url, id) , headers=headers)
-        if "The coupon code entered" in r.text:
+        if "The coupon code entered" in r.text or "This coupon has exceeded its maximum possible redemptions and can no longer be used" in r.text:
             return False , 0
         else:
             try:
@@ -52,14 +58,16 @@ def Validate_link_and_get_price(url):
             except:
                 price = 0
             return True , price 
+
+
     except:
         return False  , 0
 
 def get_categ():
     category = None
     value_13 = None
-    if category == None:    
-        while category not in [x for x in range(1, 15)]:
+    if category is None:
+        while category not in list(range(1, 15)):
             category = int(input(f"""{YELLOW} 
  |  ____|                                            
  | |__ _ __ ___  ___    ___ ___  _   _ _ __ ___  ___ 
@@ -109,34 +117,23 @@ def get_pages (pages=None):
 
     return pages    
 
-def export_data(total_courses , total_coupons , total_saved, number_courses, write_data = True ):
-    yt_course = []
-    yt_coupon = []
-    udemy_course = []
-    udemy_coupon = []
-    for course  , coupon in zip(total_courses , total_coupons):
-        if "udemy" in coupon:
-            udemy_course.append(course)
-            udemy_coupon.append(coupon)
-        else:
-            yt_course.append(course)
-            yt_coupon.append(coupon)
+def export_data(udemy_courses, youtube_courses , total_saved, write_data = True ):
+    total_courses = len(udemy_courses) + len(youtube_courses)
 
-    yt_formatted = "\n".join("[+]  [{}]\n\n{}\n\n".format(x, y) for x, y in zip(yt_course, yt_coupon))
-    udemy_formatted = "\n".join("[+]  [{}]\n\n{}\n\n".format(x, y) for x, y in zip(udemy_course, udemy_coupon))
-    string_start = f"""{GREEN}Here are the courses which we could find (100% Working):
-Total worth of Courses: {str(total_saved)} USD
-Number of courses : {str(number_courses)}
+    yt_formatted = "\n".join("[+]  [{}]\n\n{}\n\n".format(x.courses, x.coupon_link) for x in youtube_courses)
+    udemy_formatted = "\n".join("[+]  [{}]\n\n{}\n\n".format(x.courses, x.coupon_link) for x  in udemy_courses)
     
+    
+    
+    
+    string_start = f'{GREEN}Here are the courses which we could find (100% Working):\nTotal worth of Courses: {total_saved} USD\nNumber of courses : {total_courses}\n    \n\n'
 
-"""
     if write_data == True:
-        f = open("Data.txt" , "w")
-        f.write(string_start)
-        f.write(udemy_formatted)
-        f.write("\n\n\n\nYoutube Courses These are often better than the udemy ones.\n\n\n\n")
-        f.write(yt_formatted)
-        f.close()
+        with open("Data.txt" , "w") as f:
+            f.write(string_start)
+            f.write(udemy_formatted)
+            f.write("\n\n\n\nYoutube Courses These are often better than the udemy ones.\n\n\n\n")
+            f.write(yt_formatted)
     clear()
     print(WHITE + string_start)
     print(WHITE + udemy_formatted)
@@ -144,3 +141,12 @@ Number of courses : {str(number_courses)}
     print(WHITE + yt_formatted)
     print(WHITE + yt_formatted)
     print(WHITE + "Data saved to Data.txt")
+
+
+def calculate_total_saved(courses : list ):
+    total = 0.0
+    for course in courses:
+        total += course.money_saved
+    return total
+
+    
